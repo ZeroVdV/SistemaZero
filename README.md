@@ -1,4 +1,4 @@
-Bem Vindo ao meu Sistema de Controle de Estoques 🙂
+Bem Vindo ao meu Sistema de Controle de Estoques em WPF 🙂
 Esta é a versão pública de um sistema que venho desenvolvendo para ajudar na organização de estoques com prateleiras grandes, como as usadas em empresas e armazéns.
 O objetivo principal é facilitar o armazenamento de produtos em múltiplos locais, de forma prática e flexível.
 O projeto tem a função de aprender e compartilhar meu trabalho experimental. 
