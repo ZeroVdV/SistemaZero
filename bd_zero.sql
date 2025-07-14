@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/07/2025 às 20:55
+-- Tempo de geração: 14/07/2025 às 22:02
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -158,7 +158,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `cargo`, `ativo`, `registro`) VALUES
 (1, 'Administrador', 'adm@gmail.com', 'lsrjXOipsCRBeL8o5JZsLOG4OFcjqWprg4hYzdbKCh4=', 0, 1, '2025-06-24'),
-(3, 'usuario para testes vendas', 'user@gmail.com', 'lsrjXOipsCRBeL8o5JZsLOG4OFcjqWprg4hYzdbKCh4=', 2, 1, '2025-07-08');
+(3, 'Usuario Comum', 'user@gmail.com', 'lsrjXOipsCRBeL8o5JZsLOG4OFcjqWprg4hYzdbKCh4=', 1, 1, '2025-07-08');
 
 --
 -- Índices para tabelas despejadas
@@ -224,7 +224,7 @@ ALTER TABLE `log_estoque`
 --
 ALTER TABLE `produto`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `codigo_produto` (`codigo_produto`),
+  ADD UNIQUE KEY `codigo_loid` (`codigo_produto`),
   ADD KEY `categoria_id` (`categoria_id`);
 
 --
