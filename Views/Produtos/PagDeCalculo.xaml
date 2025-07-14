@@ -1,0 +1,177 @@
+﻿<Window x:Class="SistemaZero.Views.Produtos.PagDeCalculo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SistemaZero.Views.Produtos"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        xmlns:UserControlMenu="clr-namespace:SistemaZero.Views.Menu"
+        Height="768" Width="1366">
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        --><!-- UserControl - Cabecalho (linha 1) --><!--
+        <UserControlMenu:Cabecalho Grid.Row="0"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="90*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+
+            --><!-- 10% da tela para o titulo da pagina --><!--
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="80*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+
+
+            <TabControl Grid.Row="1" Grid.Column="1" Background="LightGray">
+                <TabItem Header="Mercado Livre" FontFamily="Arial" FontSize="18" FontWeight="Bold">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="110"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+
+                        <Grid Grid.Row="0" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Items:MoneyInput x:Name="precoUnidML" HorizontalAlignment="Center" Width="140"/>
+                            <Items:PercentInput x:Name="taxaML" HorizontalAlignment="Center" Grid.Column="2" />
+                            <Items:PercentInput x:Name="lucroPercML" HorizontalAlignment="Center" Grid.Column="1"/>
+                            <Items:QuantidadeInput x:Name="qtdUnidML" MinimumValue="1" HorizontalAlignment="Center" Grid.Column="3"/>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Margin="10" HorizontalAlignment="Center">
+                            <ComboBox x:Name="freteComboBox"
+                                  SelectionChanged="freteComboBox_SelectionChanged"
+                                  Height="30" FontSize="14" VerticalContentAlignment="Center">
+                                <ComboBoxItem Content="Calcular sem Frete Gratis"/>
+                                <ComboBoxItem Content="Calcular com Peso Unidade"/>
+                                <ComboBoxItem Content="Calcular com Peso Total"/>
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Margin="5" x:Name="gridCalculoFrete" Height="100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                --><!--peso total--><!--
+                                <Items:KgInput x:Name="pesoTotalML" Visibility="Collapsed" HorizontalAlignment="Center" Grid.Column="0" />
+
+                                --><!--Calcular por unidade--><!--
+                                <Items:GramaInput x:Name="pesoUnidML" HorizontalAlignment="Center" Grid.Column="0"/>
+
+
+                                --><!--Caixas pré estabelecidas colocar um titulo--><!--
+                                <Grid Grid.Column="1" HorizontalAlignment="Center" Margin="0 10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Caixas pré-selecionadas" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <ComboBox Name="cmbCaixas" Grid.Row="1" SelectionChanged="cmbCaixas_SelectionChanged" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <ComboBoxItem Content="Minimo Caixa"/>
+                                        <ComboBoxItem Content="Caixa 1"/>
+                                        <ComboBoxItem Content="Minimo Envelope"/>
+                                        <ComboBoxItem Content="Envelope 1"/>
+                                        --><!-- não deixa a grid do lado invi, apenas preencher o forms com os numeros da caixa--><!--
+                                    </ComboBox>
+                                </Grid>
+
+                            </Grid>
+
+
+
+                            --><!--Caso clique em "outro"--><!--
+
+                            <Grid x:Name="gridDimensoesCaixa" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                --><!--Caso seja o peso total esceonder esse de gramas--><!--
+                                <Items:GramaInput x:Name="pesoEntregaML" HorizontalAlignment="Center" Grid.Column="0" Width="120"/>
+
+                                --><!--Dimensões--><!--
+                                <Items:CmInput x:Name="alturaML" MinimumValue="0.4" HorizontalAlignment="Center" Grid.Column="1" Width="120"/>
+                                --><!-- Minimo 0,4 cm , Maximo 100cm --><!--
+                                <Items:CmInput x:Name="larguraML" MinimumValue="8" HorizontalAlignment="Center" Grid.Column="2" Width="120"/>
+                                --><!--Minimo 8cm , Maximo 100cm--><!--
+                                <Items:CmInput x:Name="comprimentoML" MinimumValue="13" HorizontalAlignment="Center" Grid.Column="3" Width="120"/>
+                                --><!--Minimo 13cm,  Maximo 100cm-->
+                                <!--conta não pode passar de 200 cm--><!--
+                            </Grid>
+
+                        </Grid>
+
+                        <Border Grid.Row="3" Name="ResultadoML" Margin="5" BorderBrush="SpringGreen" BorderThickness="0 2 0 0" Visibility="Hidden" Height="100">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Items:SimpleTextBlock Grid.Column="0" x:Name="VTProduto" HorizontalAlignment="Center"/>
+                                <Items:SimpleTextBlock Grid.Column="1" x:Name="VTLucroML" HorizontalAlignment="Center"/>
+                                <Items:SimpleTextBlock Grid.Column="2" x:Name="VTcorreiosML" HorizontalAlignment="Center"/>
+                                <Items:SimpleTextBlock Grid.Column="3" x:Name="VTtaxaMinimaML" HorizontalAlignment="Center"/>
+                                <Items:SimpleTextBlock Grid.Column="4" x:Name="VTvalorMinimo" HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+
+                        <Grid Grid.Row="4" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.ColumnSpan="2" Click="btnCalcular_Click" Content="Calcular"/>
+
+                            <Grid Grid.Column="1" Name="ResultadoML2" Visibility="Hidden">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Items:SimpleTextBlock Grid.Column="1" x:Name="VTfinalML" Margin="5"  Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Items:SimpleTextBlock Grid.Column="0" x:Name="VTtaxaMaximaML" Margin="5" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            
+                        </Grid>
+                        
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>-->
+    </Grid>
+</Window>

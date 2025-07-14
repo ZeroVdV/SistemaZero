@@ -1,0 +1,87 @@
+CREATE DATABASE IF NOT EXISTS bd_zero;
+USE bd_zero;
+
+-- Tabela Usuario
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(100) NOT NULL,
+    cargo INT NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    registro DATE DEFAULT CURRENT_DATE
+);
+
+-- Tabela Categoria
+CREATE TABLE categoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    linha VARCHAR(100) NOT NULL
+);
+
+-- Tabela Produto
+CREATE TABLE produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(200) NOT NULL,
+    categoria_id INT,
+    codigo_produto VARCHAR(100) UNIQUE,
+    ativo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (categoria_id) REFERENCES categoria(id) ON DELETE SET NULL
+);
+
+-- Tabela Estoque (Locais físicos)
+CREATE TABLE estoque (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+-- Tabela Estoque_Produto (Produto em locais específicos)
+CREATE TABLE estoque_produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    estoque_id INT NOT NULL,
+    rua INT,
+    predio INT,
+    nivel INT,
+    lado BOOLEAN,
+    quantidade INT DEFAULT 0,
+    FOREIGN KEY (produto_id) REFERENCES produto(id) ON DELETE CASCADE,
+    FOREIGN KEY (estoque_id) REFERENCES estoque(id) ON DELETE CASCADE
+);
+
+-- Tabela Código Adicional (Variações ou códigos auxiliares dos produtos)
+CREATE TABLE codigos_adicionais (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    codigo VARCHAR(100) NOT NULL,
+    FOREIGN KEY (produto_id) REFERENCES produto(id) ON DELETE CASCADE
+);
+
+-- Tabela Imagem (Armazena URL das imagens)
+CREATE TABLE imagem (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    url VARCHAR(255) NOT NULL
+);
+
+-- Tabela de Imagem Estoque (Imagem principal do produto)
+CREATE TABLE imagem_estoque (
+    produto_id INT NOT NULL,
+    imagem_id INT NOT NULL,
+    PRIMARY KEY (produto_id, imagem_id),
+    FOREIGN KEY (produto_id) REFERENCES produto(id) ON DELETE CASCADE,
+    FOREIGN KEY (imagem_id) REFERENCES imagem(id) ON DELETE CASCADE
+);
+
+-- Tabela de Imagem Loja (Imagens adicionais para exibição na loja, com ordem)
+CREATE TABLE imagem_loja (
+    produto_id INT NOT NULL,
+    imagem_id INT NOT NULL,
+    ordem INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (produto_id, imagem_id),
+    FOREIGN KEY (produto_id) REFERENCES produto(id) ON DELETE CASCADE,
+    FOREIGN KEY (imagem_id) REFERENCES imagem(id) ON DELETE CASCADE
+);
+
+INSERT INTO usuario (nome, email, senha, cargo, ativo, registro)
+VALUES ('Administrador', 'adm@gmail.com', 'lsrjXOipsCRBeL8o5JZsLOG4OFcjqWprg4hYzdbKCh4=', 0, TRUE, CURRENT_DATE);
+

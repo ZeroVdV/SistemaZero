@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Imagens\AddFile.png" />
+    <None Remove="Views\Imagens\AddUser.png" />
+    <None Remove="Views\Imagens\Arrow.png" />
+    <None Remove="Views\Imagens\Close.png" />
+    <None Remove="Views\Imagens\Edit.png" />
+    <None Remove="Views\Imagens\ExcelDownload.png" />
+    <None Remove="Views\Imagens\ListFile.png" />
+    <None Remove="Views\Imagens\ListLog.png" />
+    <None Remove="Views\Imagens\ListUser.png" />
+    <None Remove="Views\Imagens\Logo.png" />
+    <None Remove="Views\Imagens\Maximize.png" />
+    <None Remove="Views\Imagens\Minimize.png" />
+    <None Remove="Views\Imagens\Minus.png" />
+    <None Remove="Views\Imagens\Reload.png" />
+    <None Remove="Views\Imagens\user-add.png" />
+    <None Remove="Views\Imagens\User.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Imagens\AddUser.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="8.0.7" />
+    <PackageReference Include="HandyControls" Version="3.6.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="MySql.Data" Version="9.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="Uno.UI" Version="5.6.99" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Imagens\AddFile.png" />
+    <Resource Include="Views\Imagens\Arrow.png" />
+    <Resource Include="Views\Imagens\Close.png" />
+    <Resource Include="Views\Imagens\Edit.png" />
+    <Resource Include="Views\Imagens\ExcelDownload.png" />
+    <Resource Include="Views\Imagens\ListFile.png" />
+    <Resource Include="Views\Imagens\ListLog.png" />
+    <Resource Include="Views\Imagens\ListUser.png" />
+    <Resource Include="Views\Imagens\Logo.png" />
+    <Resource Include="Views\Imagens\Maximize.png" />
+    <Resource Include="Views\Imagens\Minimize.png" />
+    <Resource Include="Views\Imagens\Minus.png" />
+    <Resource Include="Views\Imagens\Reload.png" />
+    <Resource Include="Views\Imagens\User.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

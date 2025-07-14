@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="SistemaZero.Views.Menu.Cabecalho"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             Background="Green"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
+             Height="36">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Logo e título -->
+        <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" Margin="10 0">
+            <Button Content="◀️" Visibility="Collapsed" x:Name="backWindow" Click="backWindow_Click" Width="36" Height="36" Style="{StaticResource ButtonIcon}"/>
+            <TextBlock x:Name="titulo"
+                       Foreground="White"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       Margin="10,0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" Margin="5, 3">
+            <!-- Botão HOME -->
+            <Button Content="🏠" Width="36" Height="30" Style="{StaticResource ButtonIcon}" Click="Home_Click"/>
+
+            <!-- Botão CONFIGURAÇÕES -->
+            <Button Content="⚙️" Width="36" Height="30" Style="{StaticResource ButtonIcon}" Click="Config_Click"/>
+
+            <Menu VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Padding="0">
+                <MenuItem x:Name="menuUsuario" FontWeight="Bold" Style="{StaticResource MenuItemUsuario}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image  Source="pack://application:,,,/Views/Imagens/User.png" 
+                                    Width="16" 
+                                    Height="16" 
+                                    Margin="0,0,5,0"
+                                    SnapsToDevicePixels="True"
+                                    UseLayoutRounding="True"
+                                    RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="NomeDoUsuario" x:Name="txtUsuario" Foreground="White" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+
+                    <MenuItem Header="🔑 Trocar Senha" Click="TrocarSenha_Click"/>
+                    <MenuItem Header="🔓 Sair" Click="Logout_Click"/>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="2" VerticalAlignment="Center">
+            <!-- Minimizar -->
+            <Button Width="36" Height="36" Style="{StaticResource ButtonIcon}" Click="Minimizar_Click">
+                <Image Source="pack://application:,,,/Views/Imagens/Minus.png" Width="16" Height="16"/>
+            </Button>
+
+            <!-- Maximizar (com imagem que muda) -->
+            <Button x:Name="btnMaximizar" Width="36" Height="36" Style="{StaticResource ButtonIcon}" Click="Maximizar_Click">
+                <Image x:Name="imgMaximizar" Source="pack://application:,,,/Views/Imagens/Minimize.png"
+                       SnapsToDevicePixels="True"
+                       UseLayoutRounding="True"
+                       RenderOptions.BitmapScalingMode="HighQuality"
+                       Width="16" Height="16"/>
+            </Button>
+
+            <!-- Fechar -->
+            <Button Width="40" Height="36" Style="{StaticResource ButtonFechar}" Click="Fechar_Click">
+                <Image Source="pack://application:,,,/Views/Imagens/Close.png"
+                       SnapsToDevicePixels="True"
+                       UseLayoutRounding="True"
+                       RenderOptions.BitmapScalingMode="HighQuality"
+                       Width="12" Height="16"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

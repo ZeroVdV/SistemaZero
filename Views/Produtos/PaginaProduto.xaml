@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="SistemaZero.Views.Produtos.PaginaProduto"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SistemaZero.Views.Produtos"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d">
+    <Grid Background="#F0FFF0" Margin="20" MinWidth="600" MaxWidth="720">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="240"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Margin="0 0 10 10" Padding="10">
+                        <Grid x:Name="gdDescricao"/>
+                    </Border>
+
+                    <Border Grid.Row="1" Margin="0 0 10 10" Padding="10">
+                        <Grid x:Name="gdCodigoProduto"/>
+                    </Border>
+                </Grid>
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Imagem"
+                           FontSize="18" Margin="4"
+                           HorizontalAlignment="Center" hc:InfoElement.Necessary="True"/>
+                    <Grid x:Name="gdImgSelector"
+                                  Margin="0 8"
+                                  Width="200"
+                                  Height="200"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Margin="0 0 10 0" Padding="10">
+                    <Grid x:Name="gdCategorias"/>
+                </Border>
+
+                <Border Grid.Row="1" Margin="0 10 10 0" Padding="10">
+                    <Grid x:Name="gdCodigoAdicional"/>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="2" Margin="0 10 0 0" Padding="10">
+                <Grid x:Name="gdEstoques"/>
+            </Border>
+
+            <Grid Grid.Row="3" Margin="20">
+                <Button x:Name="btnSalvar"
+                    Content="Salvar Produto"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Height="30"
+                    Click="btnSalvar_Click"
+                    Style="{StaticResource ButtonSuccess}"
+                    HorizontalAlignment="Center"/>
+                <Button x:Name="btnAtualizar"
+                    Content="Atualizar Produto"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Height="30"
+                    Click="btnAtualizar_Click"
+                    Style="{StaticResource ButtonSuccess}"
+                    HorizontalAlignment="Center"
+                    Visibility="Collapsed"/>
+            </Grid>
+
+
+        </Grid>
+</UserControl>
