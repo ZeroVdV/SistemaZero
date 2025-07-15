@@ -4,9 +4,9 @@ O objetivo principal é facilitar o armazenamento de produtos em múltiplos loca
 O projeto tem a função de aprender e compartilhar meu trabalho experimental. 
 E além de servir como aprendizado pessoal, pode ser útil para outras pessoas que queiram entender ou implementar algo parecido e até me ajudar a melhora-lo.
 
-- Decidi compartilhar meu projeto para:
+- Decidi compartilhar meu projeto para
   - Compartilhar conhecimento (mesmo que não seja muito avançado, eu ainda gostaria de compartilhar algo)
-  - Aprender com sugestões e feedbacks (qualquer sugestão de melhora é bem vinda, logo agradeço!)
+  - Aprender com sugestões e feedbacks (qualquer sugestão de melhora é bem-vinda, logo agradeço!)
   - Criar um portfólio real
   - Ajudar quem busca soluções similares (fiquei horas tentando fazer alguns itens, espero que no futuro, isso ajude alguém)
 
@@ -15,6 +15,7 @@ E além de servir como aprendizado pessoal, pode ser útil para outras pessoas q
   - Cadastro com imagem para facilitar a identificação dos produtos (tem a opção de ser sem imagem também)
   - Organização com endereçamento logístico simples (rua, prédio, nível, lado)
   - Planejamento de sistema de registro de alterações no estoque
+  - Utilizo extenções como HandyControls para melhor visual funcional
 
 - O que planejo melhorar ou adicionar futuramente
   - Melhor controle de usuários e permissões
@@ -22,4 +23,5 @@ E além de servir como aprendizado pessoal, pode ser útil para outras pessoas q
   - Registro completo de ações e mudanças
   - Exportação de dados (Excel, PDF, etc.)
   - Integração com APIs externas, se necessário
+  - Separar melhor os produtos por linha de produção
 
