@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace SistemaZero.Views.ItemsReutilizaveis
 {
-    public partial class ConfirmarComSenha : Window
+    public partial class ConfirmarComSenha : HandyControl.Controls.Window
     {
         private Senha campoSenha;
         private readonly UserController controller = new UserController();

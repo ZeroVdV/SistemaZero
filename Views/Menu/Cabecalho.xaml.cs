@@ -1,4 +1,6 @@
 ﻿using SistemaZero.Controller;
+using SistemaZero.Views.ItemsReutilizaveis;
+using SistemaZero.Views.ItemsUnicos;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -97,7 +99,8 @@ namespace SistemaZero.Views.Menu
 
         private void TrocarSenha_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Abrir tela de trocar senha");
+            var redefinir = new RedefinirSenha();
+            redefinir.ShowDialog();
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)

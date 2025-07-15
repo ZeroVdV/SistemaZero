@@ -21,17 +21,14 @@ namespace SistemaZero.Controller
         {
             if (produto.Categoria!.Id == null)
                 produto.Categoria.Id = conexao.adicionarCategoria(produto.Categoria);
-            if(produto.Estoques != null)
-                foreach (Estoque est in produto.Estoques)
-                {
-                    if(est.Locais!.ID == null)
-                    {
-                        est.Locais.ID = conexao.adicionarLocalEstoque(est.Locais);
-                    }
-                }
 
             produto.ID = conexao.adicionarProduto(produto);
             conexao.LogNovoProduto(userID, produto);
+        }
+
+        public int AdicionarLocalEstoque(string local)
+        {
+            return conexao.adicionarLocalEstoque(local);
         }
 
         public string SalvarImagem(string caminho)
@@ -94,7 +91,7 @@ namespace SistemaZero.Controller
             return conexao.listarEstoques();
         }
 
-        public void DeletarCodigoAdicional(Codigo_Adicional cod)
+        public void DeletarCodigoAdicional(int cod)
         {
             conexao.deletarCodigo(cod);
         }
@@ -108,26 +105,19 @@ namespace SistemaZero.Controller
         {
             if (produto.Categoria!.Id == null)
                 produto.Categoria.Id = conexao.adicionarCategoria(produto.Categoria);
-            if (produto.Estoques != null)
-                foreach (Estoque est in produto.Estoques)
-                {
-                    if (est.Locais!.ID == null)
-                    {
-                        est.Locais.ID = conexao.adicionarLocalEstoque(est.Locais);
-                    }
-                }
 
             conexao.editarProduto(produto);
             conexao.LogEditarProduto(userID, produto);
         }
 
-        public List<Log_Produto> BuscarLogsProduto(int ultimoId, int qtd_retorno, string? termo, int? tipo)
+        public void EditarNomeEstoque(int id, string novoNome)
         {
-            if (termo == null)
-            {
-                return conexao.TodosLogs(ultimoId, qtd_retorno, tipo);
-            }
-            return conexao.BuscarLogs(ultimoId, qtd_retorno, termo, tipo);
+            conexao.editarNomeEstoque(id, novoNome);
+        }
+
+        public List<Log_Produto> BuscarLogsProduto(DateTime? ultimaData, int ultimoId, int qtd_retorno, string? termo, int? tipo)
+        {
+            return conexao.BuscarLogsProdutoPaginado(ultimaData, ultimoId, qtd_retorno, termo, tipo);
         }
 
     }

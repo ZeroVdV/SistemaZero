@@ -1,0 +1,22 @@
+﻿<hc:Window x:Class="SistemaZero.Views.ItemsReutilizaveis.ConfirmacaoSimNao"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SistemaZero.Views.ItemsReutilizaveis"
+        mc:Ignorable="d"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        Title="Confirmação"
+        Icon="/Views/Imagens/Logo.png"
+        Width="300"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <StackPanel Margin="20">
+        <TextBlock x:Name="txtConfirmacao" FontSize="18" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0 0 0 20"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="Sim" Width="70" Margin="0 0 30 0" Click="Sim_Click" Style="{StaticResource ButtonSuccess}" />
+            <Button Content="Não" Width="70" Click="Nao_Click" Style="{StaticResource ButtonDanger}" />
+        </StackPanel>
+    </StackPanel>
+</hc:Window>

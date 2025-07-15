@@ -17,7 +17,9 @@ namespace SistemaZero.Views.ItemsUnicos
         {
             InitializeComponent();
             PreencherCategorias();
-            cmBoxLinhas.ItemsSource = new List<string> { "Conexões", "Agrícola", "Chopp" };
+            cmBoxLinhas.ItemsSource = Linha.Todas;
+            cmBoxLinhas.DisplayMemberPath = "Nome";
+            cmBoxLinhas.SelectedValuePath = "Id";
             btn_Add.Visibility = permissao ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -61,7 +63,7 @@ namespace SistemaZero.Views.ItemsUnicos
             {
                 Id = null,
                 Nome = texto.Text,
-                Linha = cmBoxLinhas.SelectedItem.ToString()
+                Linha = ((Linha)cmBoxLinhas.SelectedItem).Nome
             };
 
             Items.Add(novoItem);

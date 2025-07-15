@@ -45,7 +45,7 @@
                     <Style TargetType="ComboBoxItem">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Erased}" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="Foreground" Value="Orange"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -62,7 +62,7 @@
                 <Button Margin="5" Grid.Row="1" x:Name="btn_Delete" Visibility="Collapsed"
     Style="{StaticResource ButtonDanger}" Click="btn_Delete_Click" Content="🗑️"/>
                 <Button Margin="5" Grid.Row="1" x:Name="btn_Restaurar" Visibility="Collapsed"
-    Style="{StaticResource ButtonInfo}" Click="btn_Restaurar_Click"  Content="↩️"/>
+    Style="{StaticResource ButtonInfo}" Click="btn_Restaurar_Click"  Content=" ↩️ "/>
             </Grid>
         </Grid>
         <Grid x:Name="gd_tb" Visibility="Collapsed">

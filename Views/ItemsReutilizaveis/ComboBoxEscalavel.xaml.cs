@@ -25,25 +25,30 @@ namespace SistemaZero.Views.ItemsReutilizaveis
             public override string ToString() => Text ?? string.Empty;
         }
 
+        private readonly bool PodeApagar;
+        private bool IsEditingMode => !PodeApagar;
+
         private ObservableCollection<Item> Items = new();
         public string Titulo { get; private set; }
         public string Placeholder { get; private set; }
-        public bool Edit { get; private set; }
+        public bool Edit = true;
 
-        public ComboBoxEscalavel(string titulo, string placeholder)
+        public ComboBoxEscalavel(string titulo, string placeholder, bool podeApagar)
         {
             InitializeComponent();
             Placeholder = placeholder;
             Titulo = titulo;
+            PodeApagar = podeApagar;
             InicializarItems(new ObservableCollection<Item>());
         }
 
-        public ComboBoxEscalavel(string titulo, string placeholder, ObservableCollection<Item> items, bool edit)
+        public ComboBoxEscalavel(string titulo, string placeholder, ObservableCollection<Item> items, bool edit, bool podeApagar)
         {
             InitializeComponent();
             Placeholder = placeholder;
             Titulo = titulo;
             Edit = edit;
+            PodeApagar = podeApagar;
             btn_Add.Visibility = edit ? Visibility.Visible : Visibility.Collapsed;
             InicializarItems(items);
         }
@@ -62,6 +67,7 @@ namespace SistemaZero.Views.ItemsReutilizaveis
 
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
+            cmBox.SelectedItem = null;
             AlternarVisibilidade(edicao: true);
         }
 
@@ -92,13 +98,26 @@ namespace SistemaZero.Views.ItemsReutilizaveis
                 return;
             }
 
-            var novoItem = new Item(null, texto.Text.Trim(), false);
-            Items.Add(novoItem);
-            cmBox.SelectedItem = novoItem;
+            if (IsEditingMode && cmBox.SelectedItem is Item itemSelecionado && itemSelecionado.ID != null)
+            {
+                itemSelecionado.Text = texto.Text.Trim();
+                itemSelecionado.Erased = true; //no caso aqui estou reutilizando o erased como edição
+                cmBox.ItemsSource = null;
+                cmBox.ItemsSource = Items;
+                cmBox.SelectedItem = itemSelecionado;
+            }
+            else
+            {
+                var novoItem = new Item(null, texto.Text.Trim(), false);
+                Items.Add(novoItem);
+                cmBox.SelectedItem = novoItem;
+            }
+
             texto.Text = string.Empty;
             AlternarVisibilidade(edicao: false);
             LimparAviso();
         }
+
 
         private void btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -134,18 +153,21 @@ namespace SistemaZero.Views.ItemsReutilizaveis
         private void cmBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!Edit) return;
+
             if (cmBox.SelectedItem is Item item)
             {
-                if (item.Erased)
+                btn_Restaurar.Content = IsEditingMode ? "✏️" : " ↩️ ";
+                if (IsEditingMode && item.ID != null)
                 {
                     btn_Delete.Visibility = Visibility.Collapsed;
                     btn_Restaurar.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    btn_Delete.Visibility = Visibility.Visible;
-                    btn_Restaurar.Visibility = Visibility.Collapsed;
+                    btn_Delete.Visibility = item.Erased ? Visibility.Collapsed : Visibility.Visible;
+                    btn_Restaurar.Visibility = item.Erased ? Visibility.Visible : Visibility.Collapsed;
                 }
+                
             }
             else
             {
@@ -169,17 +191,33 @@ namespace SistemaZero.Views.ItemsReutilizaveis
         {
             if (cmBox.SelectedItem is Item item)
             {
-                if (item.ID != null && item.Erased)
+                if (IsEditingMode)
+                {
+                    texto.Text = item.Text;
+                    AlternarVisibilidade(edicao: true);
+                }
+                else if (item.ID != null && item.Erased)
+                {
                     item.Erased = false;
-                btn_Delete.Visibility = Visibility.Visible;
-                btn_Restaurar.Visibility = Visibility.Collapsed;
-                cmBox.Items.Refresh();
+                    btn_Delete.Visibility = Visibility.Visible;
+                    btn_Restaurar.Visibility = Visibility.Collapsed;
+                    cmBox.Items.Refresh();
+                }
             }
         }
+
 
         public ObservableCollection<Item> GetItems()
         {
             return Items;
+        }
+
+        public List<int> GetErasedItems()
+        {
+            return Items
+                .Where(item => item.Erased && item.ID != null)
+                .Select(item => item.ID!.Value)
+                .ToList();
         }
 
         public List<Codigo_Adicional> GetCodigosAdicionais()
@@ -191,6 +229,14 @@ namespace SistemaZero.Views.ItemsReutilizaveis
                     Id = item.ID,
                     Codigo = item.Text
                 })
+                .ToList();
+        }
+
+        public List<(int? Id, string Nome)> GetItensEditados()
+        {
+            return Items
+                .Where(item => item.Erased && item.ID != null)
+                .Select(item => (item.ID, item.Text ?? string.Empty))
                 .ToList();
         }
 

@@ -4,8 +4,10 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         ResizeMode="CanMinimize"
         Height="480" Width="600"
-        WindowStartupLocation="CenterScreen">
-
+        WindowStartupLocation="CenterScreen"
+        Icon="/Views/Imagens/Logo.png"
+        WindowStyle="SingleBorderWindow"
+        ShowInTaskbar="True">
 
     <Grid Margin="20" Width="auto">
         <Grid.RowDefinitions>

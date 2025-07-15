@@ -45,7 +45,7 @@
                         </StackPanel>
                     </MenuItem.Header>
 
-                    <MenuItem Header="🔑 Trocar Senha" Click="TrocarSenha_Click"/>
+                    <MenuItem Header="🔑 Redefinir Senha" Click="TrocarSenha_Click"/>
                     <MenuItem Header="🔓 Sair" Click="Logout_Click"/>
                 </MenuItem>
             </Menu>

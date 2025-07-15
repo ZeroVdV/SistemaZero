@@ -41,7 +41,7 @@ namespace SistemaZero
             AtualizarBotaoVoltar();
         }
 
-        public void Voltar()
+        public void Voltar(bool clear = true)
         {
             if (historicoTelas.Count > 1)
             {
@@ -50,7 +50,7 @@ namespace SistemaZero
                 cabecalho.SetTitulo(anterior.Titulo);
             }
 
-            AtualizarBotaoVoltar();
+            AtualizarBotaoVoltar(clear);
         }
 
         public void TelaInicial()
@@ -65,10 +65,10 @@ namespace SistemaZero
             AtualizarBotaoVoltar();
         }
 
-        private void AtualizarBotaoVoltar()
+        private void AtualizarBotaoVoltar(bool clear = true)
         {
-            Growl.Clear("MessageTk");
             cabecalho.SetBotaoVoltarVisivel(historicoTelas.Count > 1);
+            if(clear) Growl.Clear("MessageTk");
         }
     }
 }
