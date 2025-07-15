@@ -89,9 +89,14 @@ namespace SistemaZero.Controller
             return (int)UserSession.atual!.ID!;
         }
 
-        public bool VerificarPermissao()
+        public bool VerificarPermissao() //esse é pra verificar na inicialização da pagina
         {
             VerificarLogon();
+            return GetPermissao();
+        }
+
+        public bool GetPermissao() //esse é p switch do cargo
+        {
             return UserSession.atual!.Cargo switch
             {
                 0 => true, //Administrador 

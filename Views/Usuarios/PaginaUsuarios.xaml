@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SistemaZero.Views.Usuarios"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d" >
-    <Grid Background="#F0FFF0" Margin="20" MaxWidth="720">
+    <Grid Background="AliceBlue" Margin="20" MaxWidth="720">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>

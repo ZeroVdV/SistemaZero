@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:SistemaZero.Views.Produtos"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d">
-    <Grid Background="#F0FFF0" Margin="20" MinWidth="600" MaxWidth="720">
+    <Grid Background="AliceBlue" Margin="20" MinWidth="600" MaxWidth="720">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -61,11 +61,11 @@
                 </Border>
             </Grid>
 
-            <Border Grid.Row="2" Margin="0 10 0 0" Padding="10">
+            <Border Grid.Row="2" Margin="0 10 0 30" Padding="10">
                 <Grid x:Name="gdEstoques"/>
             </Border>
 
-            <Grid Grid.Row="3" Margin="20">
+            <Grid Grid.Row="3" Margin="10" VerticalAlignment="Bottom">
                 <Button x:Name="btnSalvar"
                     Content="Salvar Produto"
                     FontSize="16"

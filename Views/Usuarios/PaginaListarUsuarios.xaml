@@ -44,17 +44,18 @@
         </Grid>
         
         <DataGrid x:Name="dgUsuarios" Grid.Row="1"
-          HorizontalAlignment="Center"
-          AutoGenerateColumns="False"
-          CanUserAddRows="False"
-          HeadersVisibility="Column"
-          IsReadOnly="True"
-          SelectionMode="Single"
-          CanUserResizeColumns="False"
-          ItemsSource="{Binding Usuarios}"
-          HorizontalScrollBarVisibility="Auto"
-          VerticalScrollBarVisibility="Auto"
-          Margin="0 20 0 10">
+                  Background="AliceBlue"
+                  HorizontalAlignment="Center"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  HeadersVisibility="Column"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserResizeColumns="False"
+                  ItemsSource="{Binding Usuarios}"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
+                  Margin="0 20 0 10">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" />

@@ -44,6 +44,7 @@
         <!-- Tabela -->
         <DataGrid x:Name="dgLogs" Grid.Row="1"
                   AutoGenerateColumns="False"
+                  Background="AliceBlue"
                   CanUserAddRows="False"
                   HorizontalAlignment="Center"
                   HeadersVisibility="Column"

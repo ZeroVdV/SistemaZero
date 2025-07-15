@@ -24,7 +24,7 @@ RenderOptions.BitmapScalingMode="HighQuality"/>
         </Grid>
 
         <!-- Botões -->
-        <hc:UniformSpacingPanel Grid.Row="1" Margin="20" HorizontalAlignment="Center"
+        <hc:UniformSpacingPanel x:Name="PainelInicial" Grid.Row="1" Margin="20" HorizontalAlignment="Center"
                         ChildWrapping="Wrap" ItemWidth="300" ItemHeight="150" Spacing="20">
 
             <Button x:Name="PagAddProd" Click="PagAddProd_Click" Height="150" 
@@ -105,6 +105,28 @@ RenderOptions.BitmapScalingMode="HighQuality"/>
                        FontSize="16" 
                        FontWeight="SemiBold"/>
                 </StackPanel>
+            </Button>
+
+            <Button Height="150" Background="Transparent" BorderThickness="0" Padding="0" Cursor="Hand">
+                <TextBlock Text="Mais conteúdo futuro" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,8,0,0" 
+                           FontSize="16" 
+                           FontWeight="SemiBold"/>
+            </Button>
+            <Button Height="150" Background="Transparent" BorderThickness="0" Padding="0" Cursor="Hand">
+                <TextBlock Text="Mais conteúdo futuro" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,8,0,0" 
+                           FontSize="16" 
+                           FontWeight="SemiBold"/>
+            </Button>
+            <Button Height="150" Background="Transparent" BorderThickness="0" Padding="0" Cursor="Hand">
+                <TextBlock Text="Mais conteúdo futuro" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,8,0,0" 
+                           FontSize="16" 
+                           FontWeight="SemiBold"/>
             </Button>
 
         </hc:UniformSpacingPanel>

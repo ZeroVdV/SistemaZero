@@ -153,6 +153,7 @@
                     </Grid.ColumnDefinitions>
                     <DataGrid x:Name="dgProdutos" Grid.Column="0"
                               HorizontalAlignment="Center"
+                              Background="AliceBlue"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               HeadersVisibility="Column"

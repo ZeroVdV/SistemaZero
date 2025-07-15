@@ -1,4 +1,5 @@
-﻿using SistemaZero.Views.Produtos;
+﻿using SistemaZero.Controller;
+using SistemaZero.Views.Produtos;
 using SistemaZero.Views.Usuarios;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,7 +9,14 @@ namespace SistemaZero.Views.Menu
     {
         public PaginaInicial()
         {
+            UserController userController = new UserController();
             InitializeComponent();
+            if (!userController.GetPermissao())
+            {
+                PainelInicial.Children.Remove(PagAddUser);
+                PainelInicial.Children.Remove(PagListUser);
+                PainelInicial.Children.Remove(PagListLog);
+            }
         }
         private MainWindow? ObterMainWindow()
         {
