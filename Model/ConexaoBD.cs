@@ -465,7 +465,7 @@ namespace SistemaZero.Model
             }
         }
 
-        public int adicionarLocalEstoque(LocaisEstoque local)
+        public int adicionarLocalEstoque(string local)
         {
             try
             {
@@ -477,7 +477,7 @@ namespace SistemaZero.Model
                     string query = @"INSERT INTO estoque (nome) 
                              VALUES (@NOME)";
                     MySqlParameter[] parametros = {
-                        new MySqlParameter("@NOME", local.Nome),
+                        new MySqlParameter("@NOME", local),
                     };
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -1129,7 +1129,7 @@ namespace SistemaZero.Model
         #endregion
 
         #region Deletar/Modificar Produto
-        public void deletarCodigo(Codigo_Adicional codigo)
+        public void deletarCodigo(int codigo)
         {
             try
             {
@@ -1138,7 +1138,7 @@ namespace SistemaZero.Model
                     conn.Open();
                     string query = @"DELETE FROM codigos_adicionais WHERE id = @CODIGO_ID";
                     MySqlParameter[] parametros = {
-                        new MySqlParameter("@CODIGO_ID", codigo.Id)
+                        new MySqlParameter("@CODIGO_ID", codigo)
                     };
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -1289,6 +1289,33 @@ namespace SistemaZero.Model
 
         }
 
+        public void editarNomeEstoque(int id, string novoNome)
+        {
+            try
+            {
+                using (MySqlConnection conn = Conectar())
+                {
+                    conn.Open();
+
+                    string updateQuery = @"UPDATE estoque 
+                                   SET nome = @NOME 
+                                   WHERE id = @ID";
+
+                    using (var updateCmd = new MySqlCommand(updateQuery, conn))
+                    {
+                        updateCmd.Parameters.AddWithValue("@NOME", novoNome);
+                        updateCmd.Parameters.AddWithValue("@ID", id);
+                        updateCmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao editar o nome do Estoque no banco de dados.", ex);
+            }
+        }
+
+
         private void editarImagemEstoque(Imagem img, int produtoId)
         {
             try
@@ -1399,7 +1426,7 @@ namespace SistemaZero.Model
             }
         }
 
-        public List<Log_Produto> TodosLogs(int ultimoId, int qtd, int? tipo)
+        public List<Log_Produto> BuscarLogsProdutoPaginado(DateTime? ultimaData, int ultimoId, int qtd, string? termo, int? tipo)
         {
             List<Log_Produto> logs = new();
 
@@ -1408,81 +1435,30 @@ namespace SistemaZero.Model
                 using (MySqlConnection conn = Conectar())
                 {
                     conn.Open();
-                    string query = @"SELECT le.id, p.codigo_produto, u.email, le.contexto_escrito, DATE(le.data_registro) as registro
-                             FROM log_estoque le
-                             INNER JOIN produto p ON le.produto_id = p.id
-                             INNER JOIN usuario u ON le.user_id = u.id
-                             WHERE le.id > @ULTIMO_ID";
+                    string query = @"
+                SELECT le.id, p.codigo_produto, u.email, le.contexto_escrito, le.registro
+                FROM log_estoque le
+                INNER JOIN produto p ON le.produto_id = p.id
+                INNER JOIN usuario u ON le.user_id = u.id
+                WHERE (@ultimaData IS NULL
+                       OR (le.registro < @ultimaData
+                           OR (le.registro = @ultimaData AND le.id < @ultimoId)))";
+
+                    if (!string.IsNullOrEmpty(termo))
+                        query += " AND (p.codigo_produto LIKE @TERMO OR u.email LIKE @TERMO)";
 
                     if (tipo.HasValue)
                         query += " AND le.contexto = @TIPO";
 
-                    query += " ORDER BY le.registro DESC";
+                    query += " ORDER BY le.registro DESC, le.id DESC";
 
                     if (qtd > 0)
                         query += " LIMIT @QTD";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@ULTIMO_ID", ultimoId);
-                        if (tipo.HasValue)
-                            cmd.Parameters.AddWithValue("@TIPO", tipo.Value);
-                        if (qtd > 0)
-                            cmd.Parameters.AddWithValue("@QTD", qtd);
-
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                logs.Add(new Log_Produto
-                                {
-                                    ID = reader.GetInt32("id"),
-                                    CodigoProduto = reader.GetString("codigo_produto"),
-                                    EmailUser = reader.GetString("email"),
-                                    ContextoEscrito = reader.GetString("contexto_escrito"),
-                                    Registro = DateOnly.FromDateTime(reader.GetDateTime("registro"))
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao buscar logs de produto.", ex);
-            }
-
-            return logs;
-        }
-
-
-        public List<Log_Produto> BuscarLogs(int ultimoId, int qtd, string termo, int? tipo)
-        {
-            List<Log_Produto> logs = new();
-
-            try
-            {
-                using (MySqlConnection conn = Conectar())
-                {
-                    conn.Open();
-                    string query = @"SELECT le.id, p.codigo_produto, u.email, le.contexto_escrito, DATE(le.registro) as registro
-                             FROM log_estoque le
-                             INNER JOIN produto p ON le.produto_id = p.id
-                             INNER JOIN usuario u ON le.user_id = u.id
-                             WHERE le.id > @ULTIMO_ID
-                               AND (p.codigo_produto LIKE @TERMO OR u.email LIKE @TERMO)";
-
-                    if (tipo.HasValue)
-                        query += " AND le.contexto = @TIPO";
-
-                    query += " ORDER BY le.registro DESC";
-
-                    if (qtd > 0)
-                        query += " LIMIT @QTD";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ULTIMO_ID", ultimoId);
+                        cmd.Parameters.AddWithValue("@ultimaData", ultimaData.HasValue ? (object)ultimaData.Value : DBNull.Value);
+                        cmd.Parameters.AddWithValue("@ultimoId", ultimoId);
                         cmd.Parameters.AddWithValue("@TERMO", $"%{termo}%");
                         if (tipo.HasValue)
                             cmd.Parameters.AddWithValue("@TIPO", tipo.Value);
@@ -1508,7 +1484,7 @@ namespace SistemaZero.Model
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao buscar logs com termo.", ex);
+                throw new Exception("Erro ao buscar logs de produto.", ex);
             }
 
             return logs;

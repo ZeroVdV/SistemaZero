@@ -29,6 +29,7 @@ namespace SistemaZero.Views.Produtos
         {
             InitializeComponent();
             dgProdutos.RowHeight = double.NaN;
+            this.IsVisibleChanged += PaginaListagemProdutos_IsVisibleChanged;
         }
 
         private void PaginaListarProdutos_Loaded(object sender, RoutedEventArgs e)
@@ -48,6 +49,14 @@ namespace SistemaZero.Views.Produtos
 
             _isLoaded = true;
             AtualizarDataGrid(ExecutarPesquisa(ultimoId, qtdRetorno), limparLista: true);
+        }
+
+        private void PaginaListagemProdutos_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsVisible && _isLoaded)
+            {
+                AtualizarItems();
+            }
         }
 
         private MainWindow? ObterMainWindow() => Application.Current.MainWindow as MainWindow;
@@ -187,14 +196,19 @@ namespace SistemaZero.Views.Produtos
 
         private void Att_Click(object sender, RoutedEventArgs e)
         {
+            AtualizarItems();
+            Growl.Clear("MessageTk");
+            Growl.Info("Produtos Atualizados!", "MessageTk");
+        }
+
+        private void AtualizarItems()
+        {
             if (tipoPesquisaAtual == null) tipoPesquisaAtual = "Todos";
             int qtd = produtos?.Count ?? 0;
             var atualizados = ExecutarPesquisa(0, qtd);
             produtos = atualizados?.Where(p => p.ID <= ultimoId).ToList() ?? new List<Produto>();
             dgProdutos.ItemsSource = null;
             dgProdutos.ItemsSource = produtos;
-            Growl.Clear("MessageTk");
-            Growl.Info("Produtos Atualizados!", "MessageTk");
         }
 
         private void btnContinuar_Click(object sender, RoutedEventArgs e)

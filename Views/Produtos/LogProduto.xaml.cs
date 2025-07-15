@@ -10,6 +10,7 @@ namespace SistemaZero.Views.Produtos
     {
         private readonly ProdutoController controller = new();
         private List<Log_Produto> listaLogs = new();
+        private DateTime? ultimaData = null;
         private int ultimoId = 0;
 
         public LogProduto()
@@ -32,27 +33,34 @@ namespace SistemaZero.Views.Produtos
             string termo = barraPesquisa.Text.Trim();
 
             int qtdConsulta = quantidade > 0 ? quantidade + 1 : -1;
-            var novosLogs = controller.BuscarLogsProduto(ultimoId, qtdConsulta, termo, tipo);
+
+            var novosLogs = controller.BuscarLogsProduto(ultimaData, ultimoId, qtdConsulta, termo, tipo);
 
             if (novosLogs.Count == 0)
             {
                 Growl.Info("Nenhum novo log encontrado.", "MessageTk");
+                btnContinuar.Visibility = Visibility.Collapsed;
                 return;
             }
 
             bool temMais = quantidade > 0 && novosLogs.Count > quantidade;
 
             if (temMais)
+            {
                 novosLogs.RemoveAt(novosLogs.Count - 1);
+            }
+
+            // Atualiza a data e id para o próximo filtro
+            var ultimoLog = novosLogs[^1];
+            ultimaData = ultimoLog.Registro.ToDateTime(TimeOnly.MinValue); // converte DateOnly para DateTime
+            ultimoId = ultimoLog.ID;
 
             listaLogs.AddRange(novosLogs);
             dgLogs.ItemsSource = null;
             dgLogs.ItemsSource = listaLogs;
 
-            ultimoId = listaLogs[^1].ID;
             btnContinuar.Visibility = temMais ? Visibility.Visible : Visibility.Collapsed;
         }
-
 
         private int ObterQuantidadeSelecionada()
         {
@@ -71,8 +79,9 @@ namespace SistemaZero.Views.Produtos
 
         private void barraPesquisa_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
-            ultimoId = 0;
             listaLogs.Clear();
+            ultimaData = null;
+            ultimoId = 0;
             BuscarLogs();
         }
     }

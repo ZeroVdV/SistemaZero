@@ -21,7 +21,7 @@ namespace SistemaZero.Views.ItemsReutilizaveis
             InfoElement.SetPlaceholder(senha, Placeholder);
         }
 
-        private void ExibirAviso(string mensagem)
+        public void ExibirAviso(string mensagem)
         {
             erro.Text = mensagem;
             erro.Visibility = Visibility.Visible;

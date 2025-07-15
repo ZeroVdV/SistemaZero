@@ -46,7 +46,7 @@ namespace SistemaZero.Views.Produtos
         {
             campoDescricao = new Texto("Descrição do Produto", "Produto Exemplo", true);
             campoCodigoProduto = new Texto("Codigo do Produto", "0000-0000-0000", true);
-            campoCodigoAdicional = new ComboBoxEscalavel("Codigos Adicionais do Produto", "0000-0000-0000");
+            campoCodigoAdicional = new ComboBoxEscalavel("Codigos Adicionais do Produto", "0000-0000-0000", true);
             campoEstoques = new ControleEstoque();
             campoCategorias = new ControleCategorias(permissao);
             seletorImg = new SeletorDeImagemUnica();
@@ -69,7 +69,7 @@ namespace SistemaZero.Views.Produtos
                     codigosAdicionais.Add(new ComboBoxEscalavel.Item(cod.Id, cod.Codigo, false));
                 }
             }
-            campoCodigoAdicional = new ComboBoxEscalavel("Codigos Adicionais do Produto", "0000-0000-0000", codigosAdicionais, permissao);
+            campoCodigoAdicional = new ComboBoxEscalavel("Codigos Adicionais do Produto", "0000-0000-0000", codigosAdicionais, permissao, true);
             campoEstoques = new ControleEstoque(produto.Estoques ?? new List<Estoque>(), permissao);
             campoCategorias = new ControleCategorias(produto.Categoria!, permissao);
             try
@@ -103,14 +103,10 @@ namespace SistemaZero.Views.Produtos
             if ((!string.IsNullOrWhiteSpace(url) && File.Exists(url)) || !permissao)
                 return true;
 
-            var result = HandyControl.Controls.MessageBox.Show(
-                "Deseja salvar sem imagem?",
-                "Confirmação",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question
-            );
+            var confirmacao = new ConfirmacaoSimNao("Deseja enviar sem Imagem?");
+            confirmacao.ShowDialog();
 
-            if (result == MessageBoxResult.Yes)
+            if (confirmacao.Confirmado)
                 return true;
 
             Growl.Error("Escolha uma Imagem.", "MessageTk");
@@ -160,7 +156,6 @@ namespace SistemaZero.Views.Produtos
                     return;
                 }
 
-                // Processo de salvar ou atualizar produto
                 string? caminhoImagem = seletorImg.GetUrl();
                 string? nomeImagem = !string.IsNullOrWhiteSpace(caminhoImagem) ? Path.GetFileName(caminhoImagem) : null;
 
@@ -184,6 +179,8 @@ namespace SistemaZero.Views.Produtos
 
                 if (imagemAlterada)
                     produto.Imagem_Estoque = novaImagem;
+
+                campoEstoques.AtualizarLocaisEstoques();
 
                 if (novo)
                 {
@@ -209,8 +206,23 @@ namespace SistemaZero.Views.Produtos
                     }
 
                     PController.EditarProduto(produto, userController.GetIdUsuario());
+
+                    //apagar codigos adicionais
+                    List<int>? codApagados = campoCodigoAdicional.GetErasedItems();
+                    if (codApagados != null)
+                        foreach (int cod in codApagados)
+                        {
+                            PController.DeletarCodigoAdicional(cod);
+                        }
+
+                    //apagar o estoques
                     campoEstoques.apagarEstoques();
-                    Growl.Success("Produto atualizado com sucesso!", "MessageTk");
+
+                    if (Application.Current.MainWindow is MainWindow main)
+                    {
+                        main.Voltar(false);
+                        Growl.Success("Produto atualizado com sucesso!", "MessageTk");
+                    }
                 }
             }
             catch (Exception ex)

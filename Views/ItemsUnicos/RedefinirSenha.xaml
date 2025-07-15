@@ -1,6 +1,10 @@
-﻿<hc:Window x:Class="SistemaZero.Views.ItemsReutilizaveis.ConfirmarComSenha"
+﻿<hc:Window x:Class="SistemaZero.Views.ItemsUnicos.RedefinirSenha"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SistemaZero.Views.ItemsUnicos"
+        mc:Ignorable="d"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         Title="Confirmar Ação" Width="300"
         WindowStartupLocation="CenterScreen"
@@ -12,22 +16,26 @@
     <Grid Margin="20 10" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Container para o controle de senha -->
-        <ContentControl x:Name="SenhaContainer"/>
+        <ContentControl x:Name="SenhaContainer" Margin="5"/>
+        <ContentControl Grid.Row="1" x:Name="NovaSenhaContainer" Margin="5"/>
+        <ContentControl Grid.Row="2" x:Name="NovaCSenhaContainer" Margin="5"/>
 
         <!-- Botões -->
-        <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="0 10 0 0">
+        <Grid Grid.Row="3" VerticalAlignment="Bottom" Margin="0 10 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Content="Confirmar" Width="100" Style="{StaticResource ButtonSuccess}"
-                       Click="Confirmar_Click"/>
+                   Click="Confirmar_Click"/>
             <Button Content="Cancelar" Width="100" Grid.Column="1" Style="{StaticResource ButtonDanger}"
-                       Click="Cancelar_Click"/>
+                   Click="Cancelar_Click"/>
         </Grid>
     </Grid>
 </hc:Window>
