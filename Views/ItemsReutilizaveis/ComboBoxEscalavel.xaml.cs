@@ -263,6 +263,7 @@ namespace SistemaZero.Views.ItemsReutilizaveis
         public void limpar()
         {
             cmBox.SelectedItem = null;
+            Items.Clear();
         }
     }
 }

@@ -162,7 +162,7 @@
                               CanUserResizeColumns="False"
                               ItemsSource="{Binding Produtos}"
                               HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Disabled"
                               Margin="10 0">
 
                         <DataGrid.Columns>
